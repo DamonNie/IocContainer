@@ -77,4 +77,14 @@ class Container
 
       return call_user_func_array([$instacne,$method_name],array_merge($di_params, $params));
     }
+	
+	public static function register($abstract,$construct = null){
+		if(is_null($construct)){
+			$instance = self::getInstance($abstract);
+            self::singleton($instance);
+		}else{			
+			$instance = self::getInstance($construct);
+            self::singleton($instance,$abstract);
+		}
+	}
 }

@@ -91,3 +91,28 @@ $c = Container::getSingleton('C');
 // 销毁类 C 的单例
 Container::delSingleton('C');
 ````
+
+### 单例注册
+Container类提供一个register的方法用来注册单例。和singleton不同，register方法实现自定义类替换抽象类功能。更改实例时候，不用重写代码去获取实例
+````
+use IOC\Container;
+
+// set exception handler
+Container::register(
+    Exceptions\ExceptionHandler::class, 
+    App\Exceptions\Handler::class
+);
+
+// get singleton 这里获取的其实是 App\Exceptions\Handler 的实例
+$handler = Container::getSingleton(Exceptions\ExceptionHandler::class);
+````
+第二个参数不传时，默认使用抽象类的实例。
+````
+use IOC\Container;
+
+// set exception handler
+Container::register(Exceptions\ExceptionHandler::class);
+
+// get singleton 这里获取的是 Exceptions\ExceptionHandler 的实例
+$handler = Container::getSingleton(Exceptions\ExceptionHandler::class);
+````
